@@ -28,3 +28,11 @@ jobs:
     # Runs a single command using the runners shell
     - name: Run a one-line script
       run: make install_dev_python_modules_verbose
+    
+    - name: Run a one-line script
+      run: |
+        cd docs
+        make buildnext
+        cd docs
+        yarn build
+        yarn export
