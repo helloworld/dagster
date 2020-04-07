@@ -24,19 +24,29 @@ jobs:
       uses: actions/setup-python@v1
       with:
         python-version: 3.7
+        
+    - name: Setup node
+      uses: actions/setup-node@v1
+      with:
+          node-version: 10
     
     # Install pandoc
     - name: Install pandoc
       run: sudo apt-get install -yqq --no-install-recommends pandoc
 
     # Runs a single command using the runners shell
-    - name: Run a one-line script
+    - name: Install pyton dependencies
       run: make install_dev_python_modules_verbose
     
-    - name: Run a one-line script
+    - name: Build docs
       run: |
         cd docs
         make buildnext
         cd docs
         yarn build
         yarn export
+        
+    - name: Deploy to surge
+      run: |
+        npm install -g surge
+        surge ./docs/next/out ${{ secrets.SURGE_DOMAIN }} --token ${{ secrets.SURGE_TOKEN }}
