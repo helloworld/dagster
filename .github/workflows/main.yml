@@ -33,14 +33,6 @@ jobs:
         make buildnext
         cd docs
         yarn build
-        yarn export
-
-    - name: Build docs
-      run: |
-        cd docs
-        make buildnext
-        cd docs
-        yarn build
         yarn export -o out/${GITHUB_REF##*/}
         ls out/
 
